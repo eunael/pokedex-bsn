@@ -1,18 +1,23 @@
 #!/usr/bin/env sh
 
-npm run format
+if ! docker info > /dev/null 2>&1; then
+    echo "❌ Docker não está rodando. Inicie o Docker e tente novamente."
+    exit 1
+fi
+
+docker compose exec -T pokedex-app npm run format
 if [ $? -ne 0 ]; then
     echo "Opa! Deu ruim aqui com Prittier. Arrume antes de continuar... 😉";
     exit 1;
 fi;
 
-npm run lint
+docker compose exec -T pokedex-app npm run lint
 if [ $? -ne 0 ]; then
     echo "Opa! Deu ruim aqui com Lint. Arrume antes de continuar... 😉";
     exit 1;
 fi;
 
-npm run test
+docker compose exec -T pokedex-app npm run test
 if [ $? -ne 0 ]; then
     echo "Opa! Deu ruim aqui com Jest. Arrume antes de continuar... 😉";
     exit 1;
