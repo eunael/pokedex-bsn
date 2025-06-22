@@ -9,13 +9,23 @@ import {
   IonRow,
   IonCol,
   IonContent,
-  IonFooter
 } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonApp, IonRouterOutlet, IonHeader, IonToolbar, IonTitle, IonSearchbar, IonGrid, IonRow, IonCol, IonContent, IonFooter],
+  imports: [
+    IonApp,
+    IonRouterOutlet,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonSearchbar,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonContent,
+  ],
 })
 export class AppComponent {
   constructor() {}
