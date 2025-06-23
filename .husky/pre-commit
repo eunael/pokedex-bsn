@@ -16,8 +16,6 @@ if ! docker compose exec -T pokedex-app npm run format:check; then
     for FILE in $STAGED_FILES; do
         [ -f "$FILE" ] && git add "$FILE"
     done
-
-    echo "✅ Código formatado automaticamente"
 fi
 
 docker compose exec -T pokedex-app npm run lint
