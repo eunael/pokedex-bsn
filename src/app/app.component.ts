@@ -10,6 +10,7 @@ import {
   IonContent,
 } from '@ionic/angular/standalone';
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -28,5 +29,9 @@ import { SearchbarComponent } from './components/searchbar/searchbar.component';
   ],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private router: Router) {}
+
+  redirectToHome() {
+    this.router.navigate([`/`]);
+  }
 }
