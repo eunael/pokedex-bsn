@@ -4,12 +4,12 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonSearchbar,
   IonGrid,
   IonRow,
   IonCol,
   IonContent,
 } from '@ionic/angular/standalone';
+import { SearchbarComponent } from './components/searchbar/searchbar.component';
 
 @Component({
   selector: 'app-root',
@@ -20,11 +20,11 @@ import {
     IonHeader,
     IonToolbar,
     IonTitle,
-    IonSearchbar,
     IonGrid,
     IonRow,
     IonCol,
     IonContent,
+    SearchbarComponent,
   ],
 })
 export class AppComponent {
