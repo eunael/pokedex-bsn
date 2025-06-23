@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title size="small">
+      <ion-grid>
+        <ion-row>
+          <ion-col
+            class="ion-text-center ion-text-sm-left"
+            (click)="redirectToHome()"
+          >
+            <img
+              src="https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png"
+              style="max-width: 120px"
+            />
+          </ion-col>
+          <ion-col>
+            <app-searchbar></app-searchbar>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
