@@ -12,8 +12,8 @@ export class SearchService {
 
   constructor(private http: HttpClient) {}
 
-  searchPokemonByName(name: string): Observable<Pokemon> {
-    return this.http.get<PokemonApi>(this.pokemonUrl + name).pipe(
+  searchPokemonByIdOrName(id: string | number): Observable<Pokemon> {
+    return this.http.get<PokemonApi>(this.pokemonUrl + id).pipe(
       map((data: PokemonApi) => {
         return {
           id: data.id,
