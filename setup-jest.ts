@@ -1,6 +1,20 @@
+import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
 
 setupZoneTestEnv();
+
+TestBed.configureTestingModule({
+  imports: [IonicModule.forRoot()],
+  providers: [
+    provideHttpClient(),
+    provideHttpClientTesting(),
+    provideRouter([])
+  ]
+});
 
 // Supressão de warnings do Angular/Ionic
 const originalConsoleWarn = console.warn;
@@ -34,7 +48,7 @@ Object.defineProperty(document.body.style, 'transform', {
   })
 });
 
-// Mock para matchMedia (usado em alguns componentes Ionic)
+// Mock para matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
@@ -49,7 +63,7 @@ Object.defineProperty(window, 'matchMedia', {
   }))
 });
 
-// Mock para Intersection Observer (usado em lazy loading)
+// Mock para Intersection Observer
 const mockIntersectionObserver = jest.fn();
 mockIntersectionObserver.mockReturnValue({
   observe: () => null,

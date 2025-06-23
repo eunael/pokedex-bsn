@@ -4,17 +4,17 @@
       <ion-title size="small">
         <ion-grid>
           <ion-row>
-            <ion-col class="ion-text-center ion-text-sm-left">
+            <ion-col
+              class="ion-text-center ion-text-sm-left"
+              (click)="redirectToHome()"
+            >
               <img
                 src="https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png"
                 style="max-width: 120px"
               />
             </ion-col>
             <ion-col size="auto">
-              <ion-searchbar
-                animated="true"
-                placeholder="Buscar pokemon"
-              ></ion-searchbar>
+              <app-searchbar></app-searchbar>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -24,25 +24,14 @@
 
   <ion-content [fullscreen]="true">
     <ion-header collapse="condense">
+      <ion-toolbar class="ion-text-center">
+        <img
+          src="https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png"
+          style="max-width: 120px"
+        />
+      </ion-toolbar>
       <ion-toolbar>
-        <ion-title size="small">
-          <ion-grid>
-            <ion-row>
-              <ion-col class="ion-text-center ion-text-sm-left">
-                <img
-                  src="https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png"
-                  style="max-width: 120px"
-                />
-              </ion-col>
-              <ion-col size="auto">
-                <ion-searchbar
-                  animated="true"
-                  placeholder="Buscar pokemon"
-                ></ion-searchbar>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-title>
+        <app-searchbar></app-searchbar>
       </ion-toolbar>
     </ion-header>
 

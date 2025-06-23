@@ -4,12 +4,13 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonSearchbar,
   IonGrid,
   IonRow,
   IonCol,
   IonContent,
 } from '@ionic/angular/standalone';
+import { SearchbarComponent } from './components/searchbar/searchbar.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -20,13 +21,17 @@ import {
     IonHeader,
     IonToolbar,
     IonTitle,
-    IonSearchbar,
     IonGrid,
     IonRow,
     IonCol,
     IonContent,
+    SearchbarComponent,
   ],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private router: Router) {}
+
+  redirectToHome() {
+    this.router.navigate([`/`]);
+  }
 }
