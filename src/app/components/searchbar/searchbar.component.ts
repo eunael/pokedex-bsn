@@ -33,7 +33,7 @@ export class SearchbarComponent {
       return;
     }
 
-    this.searchService.searchPokemonByName(pokemonName).subscribe({
+    this.searchService.searchPokemonByIdOrName(pokemonName).subscribe({
       next: (pokemon: Pokemon) => {
         this.pokemonFound = pokemon;
       },
