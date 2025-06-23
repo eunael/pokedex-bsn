@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { PokemonDetailsComponent } from './pokemons/pokemon-details/pokemon-details.component';
 
 export const routes: Routes = [
   {
@@ -9,5 +10,9 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
+  },
+  {
+    path: 'pokemons/:id',
+    component: PokemonDetailsComponent,
   },
 ];

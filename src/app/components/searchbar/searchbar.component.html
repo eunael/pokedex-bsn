@@ -1,9 +1,23 @@
-<form>
+<div>
   <ion-searchbar
     show-clear-button="always"
     animated="true"
     placeholder="Digite o nome do pokemon"
     [debounce]="750"
     (ionInput)="getPokemon($event)"
+    (ionClear)="setPokemonFoundNull()"
   ></ion-searchbar>
-</form>
+
+  @if (pokemonFound) {
+    <ion-list>
+      <ion-item (click)="redirectToPokemonDetails()" [button]="true">
+        <ion-avatar>
+          <ion-img [src]="pokemonFound.imageUrl"></ion-img>
+        </ion-avatar>
+        <ion-label class="ion-text-capitalize">
+          {{ pokemonFound.name }}
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  }
+</div>

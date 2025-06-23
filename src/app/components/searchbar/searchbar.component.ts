@@ -1,6 +1,14 @@
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { IonSearchbar } from '@ionic/angular/standalone';
+import {
+  IonSearchbar,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonImg,
+  IonAvatar,
+} from '@ionic/angular/standalone';
 import { SearchService } from 'src/app/services/search.service';
 import { Pokemon } from 'src/app/types/Pokemon';
 
@@ -8,19 +16,20 @@ import { Pokemon } from 'src/app/types/Pokemon';
   selector: 'app-searchbar',
   templateUrl: './searchbar.component.html',
   styleUrls: ['./searchbar.component.scss'],
-  imports: [IonSearchbar],
+  imports: [IonSearchbar, IonList, IonItem, IonLabel, IonImg, IonAvatar],
 })
 export class SearchbarComponent {
   searchService = inject(SearchService);
-  pokemonFound?: Pokemon;
+  pokemonFound?: Pokemon | null;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   getPokemon(event: Event) {
     const target = event.target as HTMLIonSearchbarElement;
     const pokemonName = target.value;
 
     if (!pokemonName) {
+      this.pokemonFound = null;
       return;
     }
 
@@ -29,8 +38,22 @@ export class SearchbarComponent {
         this.pokemonFound = pokemon;
       },
       error: error => {
-        alert('Erro: ' + error.message);
+        this.pokemonFound = null;
+        console.error('Erro: ' + error.message);
       },
     });
+  }
+
+  setPokemonFoundNull() {
+    this.pokemonFound = null;
+  }
+
+  redirectToPokemonDetails() {
+    if (!this.pokemonFound) {
+      return;
+    }
+
+    this.router.navigate([`/pokemons/${this.pokemonFound.id}`]);
+    this.pokemonFound = null;
   }
 }
