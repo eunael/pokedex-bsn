@@ -1,19 +1,11 @@
 FROM node:24.2-alpine
 
-RUN apk add --no-cache \
-    git \
-    python3 \
-    make \
-    g++ \
-    && npm install -g @ionic/cli
-
 WORKDIR /app
 
-COPY package*.json ./
-
-RUN npm ci --only=production=false
-
 COPY . .
+
+RUN npm install && \
+    npm install -g @ionic/cli
 
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S ionic -u 1001 -G nodejs && \

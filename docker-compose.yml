@@ -1,27 +1,12 @@
 services:
-  pokedex-app:
+  pokedex:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: pokedex-ionic
+    container_name: pokedex-app
     ports:
       - "8100:8100"
       - "35729:35729"
     volumes:
       - .:/app
       - /app/node_modules
-    environment:
-      - NODE_ENV=development
-      - CHOKIDAR_USEPOLLING=true
-    networks:
-      - pokedex-network
-    restart: unless-stopped
-    stdin_open: true
-    tty: true
-
-networks:
-  pokedex-network:
-    driver: bridge
-
-volumes:
-  build-output:
