@@ -5,10 +5,32 @@ export type Pokemon = {
   weight: number;
   types: PokemonType[];
   imageUrl: string;
+  xp: number;
+  weaknesses: PokemonType[];
+  abilities: PokemonAbility[];
+  stats: PokemonStat[];
+  chainEnvolution: PokemonEvolutionChain;
 };
 
 export type PokemonType = {
   slot: number;
   name: string;
   url: string;
+};
+
+export type PokemonAbility = {
+  slot: number;
+  name: string;
+  url: string;
+};
+
+export type PokemonStat = {
+  name: string;
+  value: number;
+  url: string;
+};
+
+export type PokemonEvolutionChain = {
+  pokemon: string;
+  evolvesTo: PokemonEvolutionChain[];
 };

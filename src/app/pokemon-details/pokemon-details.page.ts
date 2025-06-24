@@ -18,11 +18,16 @@ import {
   IonCardTitle,
   IonCardContent,
   IonCardSubtitle,
+  IonButton,
+  IonIcon,
 } from '@ionic/angular/standalone';
 import { ToolbarComponent } from '../components/toolbar/toolbar.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SearchService } from '../services/search.service';
-import { Pokemon } from '../types/Pokemon';
+import { Pokemon, PokemonEvolutionChain } from '../types/Pokemon';
+
+import { addIcons } from 'ionicons';
+import { arrowBack } from 'ionicons/icons';
 
 @Component({
   selector: 'app-pokemon-details',
@@ -43,13 +48,22 @@ import { Pokemon } from '../types/Pokemon';
     IonCardTitle,
     IonCardContent,
     IonCardSubtitle,
+    CommonModule,
+    IonButton,
+    IonIcon,
   ],
 })
 export class PokemonDetailsPage implements OnInit {
   search = inject(SearchService);
   pokemon: WritableSignal<Pokemon | null> = signal(null);
+  evolutions: WritableSignal<PokemonEvolutionChain[]> = signal([]);
 
-  constructor(private readonly route: ActivatedRoute) {}
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly router: Router
+  ) {
+    addIcons({ arrowBack });
+  }
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -57,7 +71,15 @@ export class PokemonDetailsPage implements OnInit {
     this.search.searchPokemonByIdOrName(id).subscribe({
       next: (pokemon: Pokemon) => {
         this.pokemon.set(pokemon);
+
+        this.search
+          .getEvolutionChainInformations(pokemon.id)
+          .then(evo => this.evolutions.set(evo));
       },
     });
+  }
+
+  redirectToHome() {
+    this.router.navigate([`/`]);
   }
 }
