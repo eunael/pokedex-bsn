@@ -1,1 +1,116 @@
-<div class="container">é</div>
+<app-toolbar></app-toolbar>
+
+<ion-content [fullscreen]="true">
+  <ion-button
+    class="ion-margin"
+    shape="round"
+    (click)="redirectToHome()"
+    routerDirection="back"
+  >
+    <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+  </ion-button>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-text-center ion-text-capitalize">
+        <div
+          style="
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+          "
+        >
+          <ion-img [src]="pokemon()?.imageUrl" style="width: 256px"></ion-img>
+        </div>
+      </ion-col>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title class="ion-text-capitalize">{{
+              pokemon()?.name
+            }}</ion-card-title>
+            <ion-card-subtitle> Nº {{ pokemon()?.id }} </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-card>
+                    <ion-card-content>
+                      <h2>Informações gerais</h2>
+                      <p>Altura: {{ pokemon()?.height }}</p>
+                      <p>Peso: {{ pokemon()?.weight }}</p>
+                      <p>XP: {{ pokemon()?.xp }}</p>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <ion-col>
+                  <ion-card>
+                    <ion-card-content>
+                      <h2>Tipos e fraquezas</h2>
+                      <p>
+                        Tipos:
+                        @for (
+                          type of pokemon()?.types;
+                          track type.slot;
+                          let last = $last
+                        ) {
+                          <span>{{ type.name + (!last ? ' | ' : '') }}</span>
+                        }
+                      </p>
+                      <p>
+                        Fraquezas:
+                        @for (
+                          type of pokemon()?.weaknesses;
+                          track type.slot;
+                          let last = $last
+                        ) {
+                          <span>{{ type.name + (!last ? ' | ' : '') }}</span>
+                        }
+                      </p>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-card>
+                    <ion-card-content>
+                      <h2>Habilidades</h2>
+                      @for (
+                        ability of pokemon()?.abilities;
+                        track ability.slot
+                      ) {
+                        <p>{{ ability.name }}</p>
+                      }
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <ion-col>
+                  <ion-card>
+                    <ion-card-content>
+                      <h2>Estatísicas</h2>
+                      @for (stat of pokemon()?.stats; track stat.name) {
+                        <p>{{ stat.name }}: {{ stat.value }}</p>
+                      }
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-content>
+    <div class="evo-container">
+      <h3>Evoluções</h3>
+
+      WIP (rescursividade)
+    </div>
+  </ion-content>
+</ion-content>
