@@ -8,15 +8,17 @@ import {
   PokemonEvolutionChain,
   PokemonStat,
   PokemonType,
+  SimplePokemon,
 } from '../types/Pokemon';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService {
-  private readonly pokemonUrl = `${environment.apiBaseUrl}pokemon/`;
-  private readonly typeUrl = `${environment.apiBaseUrl}type/`;
-  private readonly specieUrl = `${environment.apiBaseUrl}pokemon-species/`;
+  private readonly pokemonUrl = `${environment.apiBaseUrl}/pokemon/`;
+  private readonly typeUrl = `${environment.apiBaseUrl}/type/`;
+  private readonly specieUrl = `${environment.apiBaseUrl}/pokemon-species/`;
+  private readonly listLimit = 20;
 
   constructor(private http: HttpClient) {}
 
@@ -94,6 +96,12 @@ export class SearchService {
     );
   }
 
+  getPokemonsList(nextPage?: string): Observable<PokemonsPaginateApi> {
+    return this.http.get<PokemonsPaginateApi>(
+      nextPage ?? `${this.pokemonUrl}?offset=0&limit=${this.listLimit}`
+    );
+  }
+
   async getEvolutionChainInformations(
     pokemonId: string | number
   ): Promise<PokemonEvolutionChain[]> {
@@ -135,6 +143,18 @@ export class SearchService {
         ];
 
         return evolvesTo;
+      });
+  }
+
+  async simpleSearchPokemon(id: string | number): Promise<SimplePokemon> {
+    return await fetch(this.pokemonUrl + id)
+      .then(res => res.json())
+      .then(res => {
+        return {
+          id: res.id,
+          name: res.name,
+          imageUrl: res.sprites.front_default,
+        } as SimplePokemon;
       });
   }
 }
@@ -189,10 +209,16 @@ type EvoChain = {
   id: number;
 };
 
-export type EvolvesToApi = {
+type EvolvesToApi = {
   species: {
     name: string;
     url: string;
   };
   evolves_to: EvolvesToApi[];
+};
+
+export type PokemonsPaginateApi = {
+  count: number;
+  next?: string;
+  results: { name: string; url: string }[];
 };

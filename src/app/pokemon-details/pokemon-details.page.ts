@@ -66,7 +66,7 @@ export class PokemonDetailsPage implements OnInit {
   }
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id: string | number = this.route.snapshot.paramMap.get('id') ?? '';
 
     this.search.searchPokemonByIdOrName(id).subscribe({
       next: (pokemon: Pokemon) => {

@@ -1,6 +1,12 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
-import { SearchService } from '../services/search.service';
-import { Pokemon } from '../types/Pokemon';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
+import { PokemonsPaginateApi, SearchService } from '../services/search.service';
+import { Pokemon, SimplePokemon } from '../types/Pokemon';
 import {
   IonCard,
   IonCardHeader,
@@ -11,6 +17,12 @@ import {
   IonIcon,
   IonCardSubtitle,
   IonCardContent,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
+  InfiniteScrollCustomEvent,
 } from '@ionic/angular/standalone';
 import { ToolbarComponent } from '../components/toolbar/toolbar.component';
 import { Router } from '@angular/router';
@@ -33,11 +45,18 @@ import { eye } from 'ionicons/icons';
     IonIcon,
     IonCardSubtitle,
     IonCardContent,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonInfiniteScroll,
+    IonInfiniteScrollContent,
   ],
 })
-export class HomePage {
+export class HomePage implements OnInit {
   searchService = inject(SearchService);
   currentPokemon: WritableSignal<Pokemon | null> = signal(null);
+  paginate: WritableSignal<PokemonsPaginateApi | null> = signal(null);
+  pokemonList: WritableSignal<SimplePokemon[]> = signal([]);
 
   constructor(private router: Router) {
     addIcons({ eye });
@@ -47,6 +66,10 @@ export class HomePage {
     setInterval(() => {
       this.getPokemon();
     }, 12000);
+  }
+
+  ngOnInit(): void {
+    this.getNextPage();
   }
 
   getPokemon() {
@@ -64,7 +87,63 @@ export class HomePage {
     });
   }
 
-  redirectToPokemonDetails() {
-    this.router.navigate([`/pokemons/${this.currentPokemon()?.id}`]);
+  redirectToPokemonDetails(id?: number | string) {
+    this.router.navigate([`/pokemons/${id ?? this.currentPokemon()?.id}`]);
+  }
+
+  getNextPage(event?: InfiniteScrollCustomEvent) {
+    const completeScroll = () => {
+      const nexturl = this.paginate()?.next ?? null;
+      if (nexturl === null) {
+        setTimeout(() => {
+          event?.target?.complete();
+        }, 500);
+        return;
+      }
+
+      const match = nexturl.match(/[?&]offset=(\d+|0).*[?&]limit=(\d+)/);
+      if (match) {
+        const limit = Number(match[2]);
+        const offset = Number(match[1]) - limit;
+
+        if (this.pokemonList().length !== offset + limit) {
+          return;
+        }
+
+        setTimeout(() => {
+          event?.target?.complete();
+        }, 500);
+      }
+    };
+    this.searchService.getPokemonsList(this.paginate()?.next).subscribe({
+      next: async (pokemonPaginate: PokemonsPaginateApi) => {
+        this.paginate.set(pokemonPaginate);
+        const results: SimplePokemon[] = pokemonPaginate.results.map(
+          (pokemon): SimplePokemon => {
+            return { name: pokemon.name } as SimplePokemon;
+          }
+        );
+        this.pokemonList.update(list => [...list, ...results]);
+
+        completeScroll();
+
+        results.forEach(async pokemon => {
+          const name = pokemon.name;
+          const pokemonData =
+            await this.searchService.simpleSearchPokemon(name);
+
+          this.pokemonList.update(list => {
+            const index = list.findIndex(p => p.name === name);
+            if (index === -1) {
+              return list;
+            }
+
+            const copy = [...list];
+            copy[index] = pokemonData;
+            return copy;
+          });
+        });
+      },
+    });
   }
 }
