@@ -1,0 +1,8 @@
+.evo-container {
+  width: 100%;
+
+  @media (min-width: 577px) {
+    width: 576px;
+    margin: 0 auto;
+  }
+}
