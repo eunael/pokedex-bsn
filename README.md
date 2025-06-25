@@ -76,7 +76,7 @@ src/app/
 
 ## Demo
 
-![](./assets/videos/demos.mp4)
+https://github.com/user-attachments/assets/9794980f-e818-47e5-82dc-069a2084c741
 
 ---
 **Desenvolvido por Natanael Alves** | Teste técnico - Desenvolvedor Full Stack
