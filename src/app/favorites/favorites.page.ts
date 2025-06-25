@@ -87,7 +87,7 @@ export class FavoritesPage implements OnInit {
   getNextPage() {
     this.page.update(page => page + 1);
 
-    const favoritesIds = this.storage.favoritePokemonIds().sort();
+    const favoritesIds = this.storage.favoritePokemonIds();
 
     const favoritesIdsPage = favoritesIds.slice(
       (this.page() - 1) * this.limit,
@@ -123,7 +123,7 @@ export class FavoritesPage implements OnInit {
   getPreviousPage() {
     this.page.update(page => page - 1);
 
-    const favoritesIds = this.storage.favoritePokemonIds().sort();
+    const favoritesIds = this.storage.favoritePokemonIds();
 
     const favoritesIdsPage = favoritesIds.slice(
       (this.page() - 1) * this.limit,
