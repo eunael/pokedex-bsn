@@ -111,11 +111,55 @@
     </ion-row>
   </ion-grid>
 
-  <ion-content>
-    <div class="evo-container">
-      <h3>Evoluções</h3>
+  <div class="evo-container">
+    <h3>Evoluções</h3>
 
-      WIP (rescursividade)
+    <div class="list-evo-container">
+      @for (evo of evolutions(); track evo.pokemon.id) {
+        <ng-container
+          *ngTemplateOutlet="recursiveTemplate; context: { $implicit: evo }"
+        >
+        </ng-container>
+      }
     </div>
-  </ion-content>
+
+    <ng-template #recursiveTemplate let-evo>
+      <ion-card class="evo-card-item-container" style="width: 100%">
+        <ion-fab class="ion-margin" horizontal="end">
+          @if (evo.pokemon.id !== pokemon()!.id) {
+            <ion-fab-button
+              (click)="redirectToPokemonDetailsEvos(evo.pokemon.name)"
+              size="small"
+            >
+              <ion-icon name="eye" size="small"></ion-icon>
+            </ion-fab-button>
+          }
+          <app-fav-button [id]="evo.pokemon.id"></app-fav-button>
+        </ion-fab>
+        <div class="card-list-image">
+          <img
+            [src]="evo.pokemon?.imageUrl"
+            style="min-width: 128px; margin: 0px auto"
+          />
+        </div>
+        <ion-card-content>
+          <ion-card-title class="ion-text-capitalize">{{
+            evo.pokemon.name
+          }}</ion-card-title>
+          <ion-card-subtitle>Nº {{ evo.pokemon?.id }}</ion-card-subtitle>
+        </ion-card-content>
+      </ion-card>
+      @if (evo.evolvesTo && evo.evolvesTo.length > 0) {
+        <div class="evo-separetor-item-container">
+          <ion-icon name="arrow-forward" size="large"></ion-icon>
+        </div>
+        @for (child of evo.evolvesTo; track child.pokemon.id) {
+          <ng-container
+            *ngTemplateOutlet="recursiveTemplate; context: { $implicit: child }"
+          >
+          </ng-container>
+        }
+      }
+    </ng-template>
+  </div>
 </ion-content>

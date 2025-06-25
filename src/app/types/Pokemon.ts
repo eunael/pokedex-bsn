@@ -37,6 +37,6 @@ export type PokemonStat = {
 };
 
 export type PokemonEvolutionChain = {
-  pokemon: string;
+  pokemon: SimplePokemon;
   evolvesTo: PokemonEvolutionChain[];
 };

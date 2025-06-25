@@ -1,8 +1,39 @@
 .evo-container {
-  width: 100%;
+  padding: 0 2rem;
 
-  @media (min-width: 577px) {
-    width: 576px;
-    margin: 0 auto;
+  .list-evo-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap !important;
+    gap: 2rem;
+
+    .evo-card-item-container {
+      flex: 1 100%;
+      min-width: 12rem;
+
+      @media (min-width: 577px) {
+        flex: 1;
+      }
+    }
+
+    .evo-separetor-item-container {
+      display: block;
+      text-align: center;
+      flex: 1 100%;
+
+      @media (min-width: 577px) {
+        flex: 0 0%;
+      }
+
+      ion-icon {
+        transform: rotate(90deg);
+
+        @media (min-width: 577px) {
+          transform: rotate(0deg);
+        }
+      }
+    }
   }
 }
