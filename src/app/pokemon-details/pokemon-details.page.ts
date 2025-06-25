@@ -83,7 +83,16 @@ export class PokemonDetailsPage implements OnInit {
     });
   }
 
-  redirectToHome() {
-    this.router.navigate([`/`]);
+  redirectToBack() {
+    let routeToBack = '/';
+
+    this.route.queryParams.subscribe(route => {
+      if (route['back']) {
+        routeToBack = route['back'];
+      }
+    });
+
+    console.log(routeToBack);
+    this.router.navigate([routeToBack]);
   }
 }

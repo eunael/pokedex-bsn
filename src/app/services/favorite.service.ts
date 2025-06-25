@@ -47,4 +47,8 @@ export class FavoriteService {
   isFavorite(id: number): boolean {
     return this.favoritePokemonIds().includes(id);
   }
+
+  favoritesCount(): number {
+    return this.favoritePokemonIds().length;
+  }
 }
