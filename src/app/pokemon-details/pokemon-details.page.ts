@@ -20,6 +20,7 @@ import {
   IonCardSubtitle,
   IonButton,
   IonIcon,
+  IonFab,
 } from '@ionic/angular/standalone';
 import { ToolbarComponent } from '../components/toolbar/toolbar.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,6 +29,7 @@ import { Pokemon, PokemonEvolutionChain } from '../types/Pokemon';
 
 import { addIcons } from 'ionicons';
 import { arrowBack } from 'ionicons/icons';
+import { FavButtonComponent } from '../components/fav-button/fav-button.component';
 
 @Component({
   selector: 'app-pokemon-details',
@@ -51,6 +53,8 @@ import { arrowBack } from 'ionicons/icons';
     CommonModule,
     IonButton,
     IonIcon,
+    FavButtonComponent,
+    IonFab,
   ],
 })
 export class PokemonDetailsPage implements OnInit {

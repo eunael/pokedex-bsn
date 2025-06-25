@@ -29,6 +29,7 @@ import { Router } from '@angular/router';
 
 import { addIcons } from 'ionicons';
 import { eye } from 'ionicons/icons';
+import { FavButtonComponent } from '../components/fav-button/fav-button.component';
 
 @Component({
   selector: 'app-home',
@@ -50,6 +51,7 @@ import { eye } from 'ionicons/icons';
     IonCol,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
+    FavButtonComponent,
   ],
 })
 export class HomePage implements OnInit {

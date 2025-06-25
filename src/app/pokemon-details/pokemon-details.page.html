@@ -22,15 +22,20 @@
             flex-direction: column;
           "
         >
-          <ion-img [src]="pokemon()?.imageUrl" style="width: 256px"></ion-img>
+          <div>
+            <ion-fab class="ion-margin" horizontal="end">
+              <app-fav-button [id]="pokemon()?.id"></app-fav-button>
+            </ion-fab>
+            <ion-img [src]="pokemon()?.imageUrl" style="width: 256px"></ion-img>
+          </div>
         </div>
       </ion-col>
       <ion-col>
         <ion-card>
           <ion-card-header>
-            <ion-card-title class="ion-text-capitalize">{{
-              pokemon()?.name
-            }}</ion-card-title>
+            <ion-card-title class="ion-text-capitalize">
+              {{ pokemon()?.name }}
+            </ion-card-title>
             <ion-card-subtitle> Nº {{ pokemon()?.id }} </ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>

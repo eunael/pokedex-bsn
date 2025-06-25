@@ -7,6 +7,7 @@
         <ion-fab-button (click)="redirectToPokemonDetails()" size="small">
           <ion-icon name="eye" size="small"></ion-icon>
         </ion-fab-button>
+        <app-fav-button [id]="currentPokemon()?.id"></app-fav-button>
       </ion-fab>
 
       <img [src]="currentPokemon()?.imageUrl" style="min-width: 256px" />
@@ -46,6 +47,7 @@
                 >
                   <ion-icon name="eye" size="small"></ion-icon>
                 </ion-fab-button>
+                <app-fav-button [id]="pokemon.id"></app-fav-button>
               </ion-fab>
               <div class="card-list-image">
                 <img
