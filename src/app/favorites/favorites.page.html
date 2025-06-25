@@ -1,0 +1,57 @@
+<app-toolbar></app-toolbar>
+
+<ion-content [fullscreen]="true">
+  <ion-button
+    class="ion-margin"
+    shape="round"
+    (click)="redirectToHome()"
+    routerDirection="back"
+  >
+    <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+  </ion-button>
+
+  <div>
+    <h1 class="ion-margin-start">Lista de Pokemons Favoritos</h1>
+    <ion-grid>
+      <ion-row>
+        @for (pokemon of pokemonList(); track pokemon.name) {
+          <ion-col size="12" size-sm="3">
+            <ion-card>
+              <ion-fab class="ion-margin" horizontal="end">
+                <ion-fab-button
+                  (click)="redirectToPokemonDetails(pokemon.name)"
+                  size="small"
+                >
+                  <ion-icon name="eye" size="small"></ion-icon>
+                </ion-fab-button>
+                <app-fav-button [id]="pokemon.id"></app-fav-button>
+              </ion-fab>
+              <div class="card-list-image">
+                <img
+                  [src]="pokemon?.imageUrl"
+                  style="min-width: 128px; margin: 0px auto"
+                />
+              </div>
+              <ion-card-content>
+                <ion-card-title>{{ pokemon.name }}</ion-card-title>
+                <ion-card-subtitle>Nº {{ pokemon?.id }}</ion-card-subtitle>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
+
+    <div class="paginate-buttons-container">
+      {{ this.page() }} / {{ this.totalPages() }}
+      <ion-button [disabled]="this.page() - 1 < 1" (click)="getPreviousPage()"
+        >Ante.</ion-button
+      >
+      <ion-button
+        [disabled]="this.page() + 1 > this.totalPages()"
+        (click)="getNextPage()"
+        >Próx.</ion-button
+      >
+    </div>
+  </div>
+</ion-content>

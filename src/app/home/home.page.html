@@ -1,12 +1,20 @@
 <app-toolbar></app-toolbar>
 
 <ion-content [fullscreen]="true">
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+    <ion-button color="dark" (click)="redirectToFavorites()">
+      <ion-icon slot="end" name="heart"></ion-icon>
+      Meus favoritos
+    </ion-button>
+  </ion-fab>
+
   <div class="container">
     <ion-card style="width: 100%" class="ion-padding">
       <ion-fab class="ion-margin" horizontal="end">
         <ion-fab-button (click)="redirectToPokemonDetails()" size="small">
           <ion-icon name="eye" size="small"></ion-icon>
         </ion-fab-button>
+        <app-fav-button [id]="currentPokemon()?.id"></app-fav-button>
       </ion-fab>
 
       <img [src]="currentPokemon()?.imageUrl" style="min-width: 256px" />
@@ -46,6 +54,7 @@
                 >
                   <ion-icon name="eye" size="small"></ion-icon>
                 </ion-fab-button>
+                <app-fav-button [id]="pokemon.id"></app-fav-button>
               </ion-fab>
               <div class="card-list-image">
                 <img

@@ -23,12 +23,14 @@ import {
   IonInfiniteScroll,
   IonInfiniteScrollContent,
   InfiniteScrollCustomEvent,
+  IonButton,
 } from '@ionic/angular/standalone';
 import { ToolbarComponent } from '../components/toolbar/toolbar.component';
 import { Router } from '@angular/router';
 
 import { addIcons } from 'ionicons';
-import { eye } from 'ionicons/icons';
+import { eye, heart } from 'ionicons/icons';
+import { FavButtonComponent } from '../components/fav-button/fav-button.component';
 
 @Component({
   selector: 'app-home',
@@ -50,6 +52,8 @@ import { eye } from 'ionicons/icons';
     IonCol,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
+    FavButtonComponent,
+    IonButton,
   ],
 })
 export class HomePage implements OnInit {
@@ -59,7 +63,7 @@ export class HomePage implements OnInit {
   pokemonList: WritableSignal<SimplePokemon[]> = signal([]);
 
   constructor(private router: Router) {
-    addIcons({ eye });
+    addIcons({ eye, heart });
 
     this.getPokemon();
 
@@ -145,5 +149,9 @@ export class HomePage implements OnInit {
         });
       },
     });
+  }
+
+  redirectToFavorites() {
+    this.router.navigate([`/favorites`]);
   }
 }

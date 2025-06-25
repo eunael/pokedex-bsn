@@ -12,4 +12,9 @@ export const routes: Routes = [
         m => m.PokemonDetailsPage
       ),
   },
+  {
+    path: 'favorites',
+    loadComponent: () =>
+      import('./favorites/favorites.page').then(m => m.FavoritesPage),
+  },
 ];

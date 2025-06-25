@@ -1,0 +1,13 @@
+<div class="fav-button-container">
+  <ion-button
+    [size]="isFavorite() ? 'medium' : 'small'"
+    shape="round"
+    color="danger"
+    (click)="toogle()"
+  >
+    <ion-icon
+      slot="icon-only"
+      [name]="isFavorite() ? 'heart' : 'heart-outline'"
+    ></ion-icon>
+  </ion-button>
+</div>
