@@ -1,7 +1,15 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  effect,
+  inject,
+  input,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { IonButton, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { heartOutline } from 'ionicons/icons';
+import { heart, heartOutline } from 'ionicons/icons';
+import { FavoriteService } from 'src/app/services/favorite.service';
 
 @Component({
   selector: 'app-fav-button',
@@ -10,18 +18,35 @@ import { heartOutline } from 'ionicons/icons';
   imports: [IonButton, IonIcon],
 })
 export class FavButtonComponent {
-  @Input() id?: string | number;
-  private favKey = 'favorites';
+  id = input<number | undefined>();
+  isFavorite: WritableSignal<boolean> = signal(false);
+  favoriteService = inject(FavoriteService);
 
   constructor() {
-    addIcons({ heartOutline });
+    addIcons({ heart, heartOutline });
+
+    effect(() => {
+      const id = this.id();
+      if (id === undefined) {
+        return;
+      }
+
+      this.isFavorite.set(this.favoriteService.isFavorite(id));
+    });
   }
 
-  // async ngOnInit() {
-  //   await this.storage.create()
-  // }
+  toogle() {
+    const id = this.id();
+    if (id === undefined) {
+      return;
+    }
 
-  // async add() {
-  //   await this.storage.set(this.favKey, this.id)
-  // }
+    if (this.isFavorite()) {
+      this.favoriteService.remove(id);
+    } else {
+      this.favoriteService.add(id);
+    }
+
+    this.isFavorite.set(this.favoriteService.isFavorite(id));
+  }
 }
