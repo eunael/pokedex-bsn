@@ -109,41 +109,43 @@ export class SearchService {
       .then(res => res.json())
       .then(res => res.evolution_chain.url);
 
-    return await fetch(evoChainUrl)
-      .then(res => res.json())
-      .then((evoChain: EvoChain) => {
-        function turnInPokemonEvolutionChain(
-          evoToApi: EvolvesToApi
-        ): PokemonEvolutionChain {
-          const pokemon = evoToApi.species.name;
-          const evolvesTo = evoToApi.evolves_to.map(e =>
-            turnInPokemonEvolutionChain(e)
-          );
+    const evoChain: EvoChain = await fetch(evoChainUrl).then(res => res.json());
 
-          return {
-            pokemon,
-            evolvesTo,
-          } as PokemonEvolutionChain;
-        }
+    const turnInPokemonEvolutionChain = async (
+      evoToApi: EvolvesToApi
+    ): Promise<PokemonEvolutionChain> => {
+      const pokemon = await this.simpleSearchPokemon(evoToApi.species.name);
 
-        function turnInEvolvesToApi(evoTo: EvolvesToApi): EvolvesToApi {
-          return {
-            species: evoTo.species,
-            evolves_to: evoTo.evolves_to.map(e => turnInEvolvesToApi(e)),
-          } as EvolvesToApi;
-        }
+      const evolvesTo = await Promise.all(
+        evoToApi.evolves_to.map(e => turnInPokemonEvolutionChain(e))
+      );
 
-        const evolvesTo: PokemonEvolutionChain[] = [
-          {
-            pokemon: evoChain.chain.species.name,
-            evolvesTo: evoChain.chain.evolves_to.map(evoTo => {
-              return turnInPokemonEvolutionChain(turnInEvolvesToApi(evoTo));
-            }),
-          },
-        ];
+      return {
+        pokemon,
+        evolvesTo,
+      };
+    };
 
-        return evolvesTo;
-      });
+    function turnInEvolvesToApi(evoTo: EvolvesToApi): EvolvesToApi {
+      return {
+        species: evoTo.species,
+        evolves_to: evoTo.evolves_to.map(e => turnInEvolvesToApi(e)),
+      } as EvolvesToApi;
+    }
+
+    const evolvesTo: PokemonEvolutionChain[] = [
+      {
+        pokemon: await this.simpleSearchPokemon(evoChain.chain.species.name),
+        evolvesTo: await Promise.all(
+          evoChain.chain.evolves_to.map(
+            async evoTo =>
+              await turnInPokemonEvolutionChain(turnInEvolvesToApi(evoTo))
+          )
+        ),
+      },
+    ];
+
+    return evolvesTo;
   }
 
   async simpleSearchPokemon(id: string | number): Promise<SimplePokemon> {
