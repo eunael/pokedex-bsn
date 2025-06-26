@@ -58,12 +58,12 @@ import { PokemonsPaginateApi } from 'src/app/interfaces/pokeapi.interface';
   ],
 })
 export class HomePage implements OnInit {
-  searchService = inject(SearchService);
+  protected readonly searchService = inject(SearchService);
   currentPokemon: WritableSignal<Pokemon | null> = signal(null);
   paginate: WritableSignal<PokemonsPaginateApi | null> = signal(null);
   pokemonList: WritableSignal<SimplePokemon[]> = signal([]);
 
-  constructor(private router: Router) {
+  constructor(protected readonly router: Router) {
     addIcons({ eye, heart });
 
     this.getPokemon();

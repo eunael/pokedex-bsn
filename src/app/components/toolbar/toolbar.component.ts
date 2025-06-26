@@ -25,7 +25,7 @@ import { Router } from '@angular/router';
   ],
 })
 export class ToolbarComponent {
-  constructor(private router: Router) {}
+  constructor(protected readonly router: Router) {}
 
   redirectToHome() {
     this.router.navigate([`/`]);

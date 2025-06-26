@@ -19,10 +19,10 @@ import { Pokemon } from '../../interfaces/pokemons.interface';
   imports: [IonSearchbar, IonList, IonItem, IonLabel, IonImg, IonAvatar],
 })
 export class SearchbarComponent {
-  searchService = inject(SearchService);
+  protected readonly searchService = inject(SearchService);
   pokemonFound?: Pokemon | null;
 
-  constructor(private router: Router) {}
+  constructor(private readonly router: Router) {}
 
   getPokemon(event: Event) {
     const target = event.target as HTMLIonSearchbarElement;

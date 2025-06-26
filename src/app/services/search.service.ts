@@ -23,12 +23,12 @@ import {
   providedIn: 'root',
 })
 export class SearchService {
-  private readonly pokemonUrl = `${environment.apiBaseUrl}/pokemon/`;
-  private readonly typeUrl = `${environment.apiBaseUrl}/type/`;
-  private readonly specieUrl = `${environment.apiBaseUrl}/pokemon-species/`;
-  private readonly listLimit = 20;
+  protected readonly pokemonUrl = `${environment.apiBaseUrl}/pokemon/`;
+  protected readonly typeUrl = `${environment.apiBaseUrl}/type/`;
+  protected readonly specieUrl = `${environment.apiBaseUrl}/pokemon-species/`;
+  protected readonly listLimit = 20;
 
-  constructor(private http: HttpClient) {}
+  constructor(protected readonly http: HttpClient) {}
 
   searchPokemonByIdOrName(id: string | number): Observable<Pokemon> {
     return this.http.get<PokemonApi>(this.pokemonUrl + id).pipe(

@@ -63,13 +63,13 @@ import { FavButtonComponent } from '../../components/fav-button/fav-button.compo
   ],
 })
 export class PokemonDetailsPage implements OnInit {
-  search = inject(SearchService);
+  protected readonly search = inject(SearchService);
   pokemon: WritableSignal<Pokemon | null> = signal(null);
   evolutions: WritableSignal<PokemonEvolutionChain[]> = signal([]);
 
   constructor(
-    private readonly route: ActivatedRoute,
-    private readonly router: Router
+    protected readonly route: ActivatedRoute,
+    protected readonly router: Router
   ) {
     addIcons({ arrowBack, arrowForward, eye });
   }

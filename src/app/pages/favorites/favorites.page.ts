@@ -52,15 +52,16 @@ import { arrowBack, eye } from 'ionicons/icons';
   ],
 })
 export class FavoritesPage implements OnInit {
-  search = inject(SearchService);
-  storage = inject(FavoriteService);
+  protected readonly search = inject(SearchService);
+  protected readonly storage = inject(FavoriteService);
+
   pokemonList: WritableSignal<SimplePokemon[]> = signal([]);
 
-  private readonly limit = 20;
-  public page = signal(0);
-  public totalPages = signal(0);
+  protected readonly limit = 20;
+  page = signal(0);
+  totalPages = signal(0);
 
-  constructor(private router: Router) {
+  constructor(protected readonly router: Router) {
     addIcons({ arrowBack, eye });
 
     effect(() => {

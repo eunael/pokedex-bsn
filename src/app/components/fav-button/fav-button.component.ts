@@ -18,9 +18,9 @@ import { FavoriteService } from 'src/app/services/favorite.service';
   imports: [IonButton, IonIcon],
 })
 export class FavButtonComponent {
-  id = input<number | undefined>();
+  protected readonly id = input<number | undefined>();
+  protected readonly favoriteService = inject(FavoriteService);
   isFavorite: WritableSignal<boolean> = signal(false);
-  favoriteService = inject(FavoriteService);
 
   constructor() {
     addIcons({ heart, heartOutline });
