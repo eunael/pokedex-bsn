@@ -9,35 +9,7 @@
   </ion-fab>
 
   <div class="container">
-    <ion-card style="width: 100%" class="ion-padding">
-      <ion-fab class="ion-margin" horizontal="end">
-        <ion-fab-button (click)="redirectToPokemonDetails()" size="small">
-          <ion-icon name="eye" size="small"></ion-icon>
-        </ion-fab-button>
-        <app-fav-button [id]="currentPokemon()?.id"></app-fav-button>
-      </ion-fab>
-
-      <img [src]="currentPokemon()?.imageUrl" style="min-width: 256px" />
-
-      <ion-card-header>
-        <ion-card-title class="ion-text-capitalize">
-          {{ currentPokemon()?.name }}
-        </ion-card-title>
-        <ion-card-subtitle> Nº {{ currentPokemon()?.id }} </ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        <p>
-          <span>Tipos: </span>
-          @for (
-            type of currentPokemon()?.types;
-            track type.slot;
-            let last = $last
-          ) {
-            <span>{{ type.name + (!last ? ' | ' : '') }}</span>
-          }
-        </p>
-      </ion-card-content>
-    </ion-card>
+    <app-pokemon-display style="width: 100%"></app-pokemon-display>
   </div>
 
   <div>

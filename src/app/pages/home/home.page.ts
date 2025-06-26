@@ -6,10 +6,9 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { SearchService } from '../../services/search.service';
-import { Pokemon, SimplePokemon } from '../../interfaces/pokemons.interface';
+import { SimplePokemon } from '../../interfaces/pokemons.interface';
 import {
   IonCard,
-  IonCardHeader,
   IonCardTitle,
   IonContent,
   IonFab,
@@ -32,6 +31,7 @@ import { addIcons } from 'ionicons';
 import { eye, heart } from 'ionicons/icons';
 import { FavButtonComponent } from '../../components/fav-button/fav-button.component';
 import { PokemonsPaginateApi } from 'src/app/interfaces/pokeapi.interface';
+import { PokemonDisplayComponent } from '../../components/pokemon-display/pokemon-display.component';
 
 @Component({
   selector: 'app-home',
@@ -39,7 +39,6 @@ import { PokemonsPaginateApi } from 'src/app/interfaces/pokeapi.interface';
   styleUrls: ['home.page.scss'],
   imports: [
     IonCard,
-    IonCardHeader,
     IonCardTitle,
     IonContent,
     ToolbarComponent,
@@ -55,46 +54,25 @@ import { PokemonsPaginateApi } from 'src/app/interfaces/pokeapi.interface';
     IonInfiniteScrollContent,
     FavButtonComponent,
     IonButton,
+    PokemonDisplayComponent,
   ],
 })
 export class HomePage implements OnInit {
   protected readonly router = inject(Router);
   protected readonly searchService = inject(SearchService);
-  currentPokemon: WritableSignal<Pokemon | null> = signal(null);
   paginate: WritableSignal<PokemonsPaginateApi | null> = signal(null);
   pokemonList: WritableSignal<SimplePokemon[]> = signal([]);
 
   constructor() {
     addIcons({ eye, heart });
-
-    this.getPokemon();
-
-    setInterval(() => {
-      this.getPokemon();
-    }, 12000);
   }
 
   ngOnInit(): void {
     this.getNextPage();
   }
 
-  getPokemon() {
-    const id = Math.floor(Math.random() * 1310 + 1);
-
-    this.searchService.searchPokemonByIdOrName(id).subscribe({
-      next: (pokemon: Pokemon) => {
-        this.currentPokemon.set(pokemon);
-      },
-      error: error => {
-        if (error.status === 404) {
-          this.getPokemon();
-        }
-      },
-    });
-  }
-
   redirectToPokemonDetails(id?: number | string) {
-    this.router.navigate([`/pokemons/${id ?? this.currentPokemon()?.id}`]);
+    this.router.navigate([`/pokemons/${id}`]);
   }
 
   getNextPage(event?: InfiniteScrollCustomEvent) {
