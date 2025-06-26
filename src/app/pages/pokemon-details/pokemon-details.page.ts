@@ -76,6 +76,11 @@ export class PokemonDetailsPage implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadPokemon();
+    this.setUrlPathBack();
+  }
+
+  loadPokemon() {
     const id: string | number = this.route.snapshot.paramMap.get('id') ?? '';
 
     this.search.searchPokemonByIdOrName(id).subscribe({
@@ -87,7 +92,9 @@ export class PokemonDetailsPage implements OnInit {
           .then(evo => this.evolutions.set(evo));
       },
     });
+  }
 
+  setUrlPathBack() {
     this.route.queryParams.subscribe(route => {
       if (route['back']) {
         this.urlPathBack = route['back'];
