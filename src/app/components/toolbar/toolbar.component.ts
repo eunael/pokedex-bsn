@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   IonToolbar,
   IonTitle,
@@ -25,7 +25,9 @@ import { Router } from '@angular/router';
   ],
 })
 export class ToolbarComponent {
-  constructor(protected readonly router: Router) {}
+  protected readonly router = inject(Router);
+
+  constructor() {}
 
   redirectToHome() {
     this.router.navigate([`/`]);

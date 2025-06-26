@@ -52,6 +52,7 @@ import { arrowBack, eye } from 'ionicons/icons';
   ],
 })
 export class FavoritesPage implements OnInit {
+  protected readonly router = inject(Router);
   protected readonly search = inject(SearchService);
   protected readonly storage = inject(FavoriteService);
 
@@ -61,7 +62,7 @@ export class FavoritesPage implements OnInit {
   page = signal(0);
   totalPages = signal(0);
 
-  constructor(protected readonly router: Router) {
+  constructor() {
     addIcons({ arrowBack, eye });
 
     effect(() => {

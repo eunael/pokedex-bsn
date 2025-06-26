@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
@@ -23,12 +23,13 @@ import {
   providedIn: 'root',
 })
 export class SearchService {
+  protected readonly http = inject(HttpClient);
   protected readonly pokemonUrl = `${environment.apiBaseUrl}/pokemon/`;
   protected readonly typeUrl = `${environment.apiBaseUrl}/type/`;
   protected readonly specieUrl = `${environment.apiBaseUrl}/pokemon-species/`;
   protected readonly listLimit = 20;
 
-  constructor(protected readonly http: HttpClient) {}
+  constructor() {}
 
   searchPokemonByIdOrName(id: string | number): Observable<Pokemon> {
     return this.http.get<PokemonApi>(this.pokemonUrl + id).pipe(
