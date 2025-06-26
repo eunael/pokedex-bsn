@@ -4,33 +4,34 @@ import { Injectable, signal, effect } from '@angular/core';
   providedIn: 'root',
 })
 export class FavoriteService {
-  private readonly FAVORITES_KEY = 'pokemon_favorites';
+  protected favoriteIds = signal<number[]>([]);
 
-  public favoritePokemonIds = signal<number[]>([]);
+  public readonly favoritePokemonIds = this.favoriteIds.asReadonly();
+  protected readonly FAVORITES_KEY = 'pokemon_favorites';
 
   constructor() {
     this.loadFavorites();
 
     effect(() => {
-      const favorites = this.favoritePokemonIds();
+      const favorites = this.favoriteIds();
       this.saveFavorites(favorites);
     });
   }
 
-  private loadFavorites() {
+  protected loadFavorites() {
     const stored = localStorage.getItem(this.FAVORITES_KEY);
     if (stored) {
       const favorites = JSON.parse(stored) as number[];
-      this.favoritePokemonIds.set(favorites);
+      this.favoriteIds.set(favorites);
     }
   }
 
-  private saveFavorites(favorites: string | number[]) {
+  protected saveFavorites(favorites: string | number[]) {
     localStorage.setItem(this.FAVORITES_KEY, JSON.stringify(favorites));
   }
 
   add(pokemonId: number): void {
-    this.favoritePokemonIds.update(current => {
+    this.favoriteIds.update(current => {
       if (!current.includes(pokemonId)) {
         return [...current, pokemonId];
       }
@@ -39,16 +40,14 @@ export class FavoriteService {
   }
 
   remove(pokemonId: number): void {
-    this.favoritePokemonIds.update(current =>
-      current.filter(id => id !== pokemonId)
-    );
+    this.favoriteIds.update(current => current.filter(id => id !== pokemonId));
   }
 
   isFavorite(id: number): boolean {
-    return this.favoritePokemonIds().includes(id);
+    return this.favoriteIds().includes(id);
   }
 
   favoritesCount(): number {
-    return this.favoritePokemonIds().length;
+    return this.favoriteIds().length;
   }
 }

@@ -5,11 +5,10 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { PokemonsPaginateApi, SearchService } from '../services/search.service';
-import { Pokemon, SimplePokemon } from '../types/Pokemon';
+import { SearchService } from '../../services/search.service';
+import { SimplePokemon } from '../../interfaces/pokemons.interface';
 import {
   IonCard,
-  IonCardHeader,
   IonCardTitle,
   IonContent,
   IonFab,
@@ -23,14 +22,16 @@ import {
   IonInfiniteScroll,
   IonInfiniteScrollContent,
   InfiniteScrollCustomEvent,
-  IonButton,
 } from '@ionic/angular/standalone';
-import { ToolbarComponent } from '../components/toolbar/toolbar.component';
-import { Router } from '@angular/router';
+import { ToolbarComponent } from '../../components/toolbar/toolbar.component';
 
 import { addIcons } from 'ionicons';
 import { eye, heart } from 'ionicons/icons';
-import { FavButtonComponent } from '../components/fav-button/fav-button.component';
+import { FavButtonComponent } from '../../components/fav-button/fav-button.component';
+import { PokemonsPaginateApi } from 'src/app/interfaces/pokeapi.interface';
+import { PokemonDisplayComponent } from '../../components/pokemon-display/pokemon-display.component';
+import { ToFavoritesPageComponent } from '../../components/redirects-buttons/to-favorites-page/to-favorites-page.component';
+import { ToSomewhereComponent } from '../../components/redirects-buttons/to-somewhere/to-somewhere.component';
 
 @Component({
   selector: 'app-home',
@@ -38,7 +39,6 @@ import { FavButtonComponent } from '../components/fav-button/fav-button.componen
   styleUrls: ['home.page.scss'],
   imports: [
     IonCard,
-    IonCardHeader,
     IonCardTitle,
     IonContent,
     ToolbarComponent,
@@ -53,46 +53,22 @@ import { FavButtonComponent } from '../components/fav-button/fav-button.componen
     IonInfiniteScroll,
     IonInfiniteScrollContent,
     FavButtonComponent,
-    IonButton,
+    PokemonDisplayComponent,
+    ToFavoritesPageComponent,
+    ToSomewhereComponent,
   ],
 })
 export class HomePage implements OnInit {
-  searchService = inject(SearchService);
-  currentPokemon: WritableSignal<Pokemon | null> = signal(null);
+  protected readonly searchService = inject(SearchService);
   paginate: WritableSignal<PokemonsPaginateApi | null> = signal(null);
   pokemonList: WritableSignal<SimplePokemon[]> = signal([]);
 
-  constructor(private router: Router) {
+  constructor() {
     addIcons({ eye, heart });
-
-    this.getPokemon();
-
-    setInterval(() => {
-      this.getPokemon();
-    }, 12000);
   }
 
   ngOnInit(): void {
     this.getNextPage();
-  }
-
-  getPokemon() {
-    const id = Math.floor(Math.random() * 1310 + 1);
-
-    this.searchService.searchPokemonByIdOrName(id).subscribe({
-      next: (pokemon: Pokemon) => {
-        this.currentPokemon.set(pokemon);
-      },
-      error: error => {
-        if (error.status === 404) {
-          this.getPokemon();
-        }
-      },
-    });
-  }
-
-  redirectToPokemonDetails(id?: number | string) {
-    this.router.navigate([`/pokemons/${id ?? this.currentPokemon()?.id}`]);
   }
 
   getNextPage(event?: InfiniteScrollCustomEvent) {
@@ -149,9 +125,5 @@ export class HomePage implements OnInit {
         });
       },
     });
-  }
-
-  redirectToFavorites() {
-    this.router.navigate([`/favorites`]);
   }
 }

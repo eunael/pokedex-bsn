@@ -1,29 +1,27 @@
 <app-toolbar></app-toolbar>
 
 <ion-content [fullscreen]="true">
-  <ion-button
-    class="ion-margin"
-    shape="round"
-    (click)="redirectToHome()"
-    routerDirection="back"
-  >
-    <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-  </ion-button>
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+    <app-to-favorites-page></app-to-favorites-page>
+  </ion-fab>
+
+  <div class="container">
+    <app-pokemon-display style="width: 100%"></app-pokemon-display>
+  </div>
 
   <div>
-    <h1 class="ion-margin-start">Lista de Pokemons Favoritos</h1>
+    <h1 class="ion-margin-start">Lista de Pokemons</h1>
     <ion-grid>
       <ion-row>
         @for (pokemon of pokemonList(); track pokemon.name) {
           <ion-col size="12" size-sm="3">
             <ion-card>
               <ion-fab class="ion-margin" horizontal="end">
-                <ion-fab-button
-                  (click)="redirectToPokemonDetails(pokemon.name)"
-                  size="small"
-                >
-                  <ion-icon name="eye" size="small"></ion-icon>
-                </ion-fab-button>
+                <app-to-somewhere [urlPath]="`pokemons/${pokemon.name}`">
+                  <ion-fab-button size="small">
+                    <ion-icon name="eye" size="small"></ion-icon>
+                  </ion-fab-button>
+                </app-to-somewhere>
                 <app-fav-button [id]="pokemon.id"></app-fav-button>
               </ion-fab>
               <div class="card-list-image">
@@ -40,18 +38,9 @@
           </ion-col>
         }
       </ion-row>
+      <ion-infinite-scroll (ionInfinite)="getNextPage($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
     </ion-grid>
-
-    <div class="paginate-buttons-container">
-      {{ this.page() }} / {{ this.totalPages() }}
-      <ion-button [disabled]="this.page() - 1 < 1" (click)="getPreviousPage()"
-        >Ante.</ion-button
-      >
-      <ion-button
-        [disabled]="this.page() + 1 > this.totalPages()"
-        (click)="getNextPage()"
-        >Próx.</ion-button
-      >
-    </div>
   </div>
 </ion-content>

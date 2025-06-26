@@ -20,14 +20,14 @@ import {
   IonCardSubtitle,
   IonButton,
 } from '@ionic/angular/standalone';
-import { FavButtonComponent } from '../components/fav-button/fav-button.component';
-import { ToolbarComponent } from '../components/toolbar/toolbar.component';
-import { Router } from '@angular/router';
-import { SimplePokemon } from '../types/Pokemon';
-import { FavoriteService } from '../services/favorite.service';
-import { SearchService } from '../services/search.service';
+import { FavButtonComponent } from '../../components/fav-button/fav-button.component';
+import { ToolbarComponent } from '../../components/toolbar/toolbar.component';
+import { SimplePokemon } from '../../interfaces/pokemons.interface';
+import { FavoriteService } from '../../services/favorite.service';
+import { SearchService } from '../../services/search.service';
 import { addIcons } from 'ionicons';
 import { arrowBack, eye } from 'ionicons/icons';
+import { ToSomewhereComponent } from '../../components/redirects-buttons/to-somewhere/to-somewhere.component';
 
 @Component({
   selector: 'app-favorites',
@@ -49,18 +49,20 @@ import { arrowBack, eye } from 'ionicons/icons';
     FavButtonComponent,
     ToolbarComponent,
     IonButton,
+    ToSomewhereComponent,
   ],
 })
 export class FavoritesPage implements OnInit {
-  search = inject(SearchService);
-  storage = inject(FavoriteService);
+  protected readonly search = inject(SearchService);
+  protected readonly storage = inject(FavoriteService);
+
   pokemonList: WritableSignal<SimplePokemon[]> = signal([]);
 
-  private readonly limit = 20;
-  public page = signal(0);
-  public totalPages = signal(0);
+  protected readonly limit = 20;
+  page = signal(0);
+  totalPages = signal(0);
 
-  constructor(private router: Router) {
+  constructor() {
     addIcons({ arrowBack, eye });
 
     effect(() => {
@@ -72,16 +74,6 @@ export class FavoritesPage implements OnInit {
 
   ngOnInit() {
     this.getNextPage();
-  }
-
-  redirectToPokemonDetails(id?: number | string) {
-    this.router.navigate([`/pokemons/${id}`], {
-      queryParams: { back: 'favorites' },
-    });
-  }
-
-  redirectToHome() {
-    this.router.navigate([`/`]);
   }
 
   getNextPage() {

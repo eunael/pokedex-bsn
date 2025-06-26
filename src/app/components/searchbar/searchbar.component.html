@@ -9,15 +9,20 @@
   ></ion-searchbar>
 
   @if (pokemonFound) {
-    <ion-list>
-      <ion-item (click)="redirectToPokemonDetails()" [button]="true">
-        <ion-avatar>
-          <ion-img [src]="pokemonFound.imageUrl"></ion-img>
-        </ion-avatar>
-        <ion-label class="ion-text-capitalize">
-          {{ pokemonFound.name }}
-        </ion-label>
-      </ion-item>
-    </ion-list>
+    <app-to-somewhere
+      [urlPath]="`pokemons/${pokemonFound.id}`"
+      [queryParams]="{ back: urlPathBack }"
+    >
+      <ion-list>
+        <ion-item [button]="true">
+          <ion-avatar>
+            <ion-img [src]="pokemonFound.imageUrl"></ion-img>
+          </ion-avatar>
+          <ion-label class="ion-text-capitalize">
+            {{ pokemonFound.name }}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </app-to-somewhere>
   }
 </div>

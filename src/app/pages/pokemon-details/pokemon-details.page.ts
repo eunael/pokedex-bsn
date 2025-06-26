@@ -23,14 +23,18 @@ import {
   IonFab,
   IonFabButton,
 } from '@ionic/angular/standalone';
-import { ToolbarComponent } from '../components/toolbar/toolbar.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SearchService } from '../services/search.service';
-import { Pokemon, PokemonEvolutionChain } from '../types/Pokemon';
+import { ToolbarComponent } from '../../components/toolbar/toolbar.component';
+import { ActivatedRoute } from '@angular/router';
+import { SearchService } from '../../services/search.service';
+import {
+  Pokemon,
+  PokemonEvolutionChain,
+} from '../../interfaces/pokemons.interface';
 
 import { addIcons } from 'ionicons';
 import { arrowBack, arrowForward, eye } from 'ionicons/icons';
-import { FavButtonComponent } from '../components/fav-button/fav-button.component';
+import { FavButtonComponent } from '../../components/fav-button/fav-button.component';
+import { ToSomewhereComponent } from '../../components/redirects-buttons/to-somewhere/to-somewhere.component';
 
 @Component({
   selector: 'app-pokemon-details',
@@ -57,21 +61,26 @@ import { FavButtonComponent } from '../components/fav-button/fav-button.componen
     FavButtonComponent,
     IonFab,
     IonFabButton,
+    ToSomewhereComponent,
   ],
 })
 export class PokemonDetailsPage implements OnInit {
-  search = inject(SearchService);
+  protected readonly route = inject(ActivatedRoute);
+  protected readonly search = inject(SearchService);
+  urlPathBack: string = '/';
   pokemon: WritableSignal<Pokemon | null> = signal(null);
   evolutions: WritableSignal<PokemonEvolutionChain[]> = signal([]);
 
-  constructor(
-    private readonly route: ActivatedRoute,
-    private readonly router: Router
-  ) {
+  constructor() {
     addIcons({ arrowBack, arrowForward, eye });
   }
 
   ngOnInit(): void {
+    this.loadPokemon();
+    this.setUrlPathBack();
+  }
+
+  loadPokemon() {
     const id: string | number = this.route.snapshot.paramMap.get('id') ?? '';
 
     this.search.searchPokemonByIdOrName(id).subscribe({
@@ -85,25 +94,11 @@ export class PokemonDetailsPage implements OnInit {
     });
   }
 
-  redirectToBack() {
-    let routeToBack = '/';
-
+  setUrlPathBack() {
     this.route.queryParams.subscribe(route => {
       if (route['back']) {
-        routeToBack = route['back'];
+        this.urlPathBack = route['back'];
       }
-    });
-
-    this.router.navigate([routeToBack]);
-  }
-
-  redirectToPokemonDetails(id?: number | string) {
-    this.router.navigate([`/pokemons/${id}`]);
-  }
-
-  redirectToPokemonDetailsEvos(id?: number | string) {
-    this.router.navigate([`/pokemons/${id}`], {
-      queryParams: { back: `pokemons/${this.pokemon()!.id}` },
     });
   }
 }

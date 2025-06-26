@@ -1,7 +1,15 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import {
+  EvoChain,
+  EvolvesToApi,
+  PokemonApi,
+  PokemonApiType,
+  PokemonsPaginateApi,
+  TypeApi,
+} from '../interfaces/pokeapi.interface';
 import {
   Pokemon,
   PokemonAbility,
@@ -9,18 +17,19 @@ import {
   PokemonStat,
   PokemonType,
   SimplePokemon,
-} from '../types/Pokemon';
+} from '../interfaces/pokemons.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService {
-  private readonly pokemonUrl = `${environment.apiBaseUrl}/pokemon/`;
-  private readonly typeUrl = `${environment.apiBaseUrl}/type/`;
-  private readonly specieUrl = `${environment.apiBaseUrl}/pokemon-species/`;
-  private readonly listLimit = 20;
+  protected readonly http = inject(HttpClient);
+  protected readonly pokemonUrl = `${environment.apiBaseUrl}/pokemon/`;
+  protected readonly typeUrl = `${environment.apiBaseUrl}/type/`;
+  protected readonly specieUrl = `${environment.apiBaseUrl}/pokemon-species/`;
+  protected readonly listLimit = 20;
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   searchPokemonByIdOrName(id: string | number): Observable<Pokemon> {
     return this.http.get<PokemonApi>(this.pokemonUrl + id).pipe(
@@ -160,67 +169,3 @@ export class SearchService {
       });
   }
 }
-
-type PokemonApi = {
-  id: number;
-  name: string;
-  height: number;
-  weight: number;
-  types: PokemonApiType[];
-  sprites: { front_default: string };
-  base_experience: number;
-  abilities: AbilitiesApi[];
-  stats: StatApi[];
-};
-
-type PokemonApiType = {
-  slot: number;
-  type: { name: string; url: string };
-};
-
-type TypeApi = {
-  id: number;
-  name: string;
-  damage_relations: {
-    double_damage_from: {
-      name: string;
-      url: string;
-    }[];
-  };
-};
-
-type AbilitiesApi = {
-  slot: number;
-  ability: {
-    name: string;
-    url: string;
-  };
-};
-
-type StatApi = {
-  base_stat: number;
-  effort: number;
-  stat: {
-    name: string;
-    url: string;
-  };
-};
-
-type EvoChain = {
-  chain: EvolvesToApi;
-  id: number;
-};
-
-type EvolvesToApi = {
-  species: {
-    name: string;
-    url: string;
-  };
-  evolves_to: EvolvesToApi[];
-};
-
-export type PokemonsPaginateApi = {
-  count: number;
-  next?: string;
-  results: { name: string; url: string }[];
-};
