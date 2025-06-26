@@ -28,7 +28,6 @@ import { ToSomewhereComponent } from '../redirects-buttons/to-somewhere/to-somew
   ],
 })
 export class SearchbarComponent implements OnInit {
-  protected readonly route = inject(Router);
   protected readonly router = inject(Router);
   protected readonly searchService = inject(SearchService);
   urlPathBack = '/';
@@ -37,7 +36,7 @@ export class SearchbarComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.urlPathBack = this.route.url;
+    this.urlPathBack = this.router.url;
   }
 
   getPokemon(event: Event) {

@@ -24,7 +24,7 @@ import {
   IonFabButton,
 } from '@ionic/angular/standalone';
 import { ToolbarComponent } from '../../components/toolbar/toolbar.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SearchService } from '../../services/search.service';
 import {
   Pokemon,
@@ -66,7 +66,6 @@ import { ToSomewhereComponent } from '../../components/redirects-buttons/to-some
 })
 export class PokemonDetailsPage implements OnInit {
   protected readonly route = inject(ActivatedRoute);
-  protected readonly router = inject(Router);
   protected readonly search = inject(SearchService);
   urlPathBack: string = '/';
   pokemon: WritableSignal<Pokemon | null> = signal(null);

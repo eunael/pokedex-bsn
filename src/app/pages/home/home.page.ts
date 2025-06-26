@@ -24,7 +24,6 @@ import {
   InfiniteScrollCustomEvent,
 } from '@ionic/angular/standalone';
 import { ToolbarComponent } from '../../components/toolbar/toolbar.component';
-import { Router } from '@angular/router';
 
 import { addIcons } from 'ionicons';
 import { eye, heart } from 'ionicons/icons';
@@ -60,7 +59,6 @@ import { ToSomewhereComponent } from '../../components/redirects-buttons/to-some
   ],
 })
 export class HomePage implements OnInit {
-  protected readonly router = inject(Router);
   protected readonly searchService = inject(SearchService);
   paginate: WritableSignal<PokemonsPaginateApi | null> = signal(null);
   pokemonList: WritableSignal<SimplePokemon[]> = signal([]);

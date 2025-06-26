@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   IonToolbar,
   IonTitle,
@@ -8,7 +8,6 @@ import {
   IonHeader,
 } from '@ionic/angular/standalone';
 import { SearchbarComponent } from '../searchbar/searchbar.component';
-import { Router } from '@angular/router';
 import { ToSomewhereComponent } from '../redirects-buttons/to-somewhere/to-somewhere.component';
 
 @Component({
@@ -27,7 +26,5 @@ import { ToSomewhereComponent } from '../redirects-buttons/to-somewhere/to-somew
   ],
 })
 export class ToolbarComponent {
-  protected readonly router = inject(Router);
-
   constructor() {}
 }

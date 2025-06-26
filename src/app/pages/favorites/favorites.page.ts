@@ -22,7 +22,6 @@ import {
 } from '@ionic/angular/standalone';
 import { FavButtonComponent } from '../../components/fav-button/fav-button.component';
 import { ToolbarComponent } from '../../components/toolbar/toolbar.component';
-import { Router } from '@angular/router';
 import { SimplePokemon } from '../../interfaces/pokemons.interface';
 import { FavoriteService } from '../../services/favorite.service';
 import { SearchService } from '../../services/search.service';
@@ -54,7 +53,6 @@ import { ToSomewhereComponent } from '../../components/redirects-buttons/to-some
   ],
 })
 export class FavoritesPage implements OnInit {
-  protected readonly router = inject(Router);
   protected readonly search = inject(SearchService);
   protected readonly storage = inject(FavoriteService);
 

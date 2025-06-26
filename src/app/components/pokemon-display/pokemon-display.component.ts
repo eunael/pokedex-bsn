@@ -16,7 +16,6 @@ import {
   IonCardContent,
 } from '@ionic/angular/standalone';
 import { FavButtonComponent } from '../fav-button/fav-button.component';
-import { Router } from '@angular/router';
 import { Pokemon } from 'src/app/interfaces/pokemons.interface';
 import { SearchService } from 'src/app/services/search.service';
 import { ToSomewhereComponent } from '../redirects-buttons/to-somewhere/to-somewhere.component';
@@ -39,7 +38,6 @@ import { ToSomewhereComponent } from '../redirects-buttons/to-somewhere/to-somew
   ],
 })
 export class PokemonDisplayComponent implements OnInit {
-  protected readonly router = inject(Router);
   protected readonly searchService = inject(SearchService);
   currentPokemon: WritableSignal<Pokemon | null> = signal(null);
 
