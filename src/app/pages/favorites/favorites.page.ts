@@ -28,6 +28,7 @@ import { FavoriteService } from '../../services/favorite.service';
 import { SearchService } from '../../services/search.service';
 import { addIcons } from 'ionicons';
 import { arrowBack, eye } from 'ionicons/icons';
+import { ToSomewhereComponent } from '../../components/redirects-buttons/to-somewhere/to-somewhere.component';
 
 @Component({
   selector: 'app-favorites',
@@ -49,6 +50,7 @@ import { arrowBack, eye } from 'ionicons/icons';
     FavButtonComponent,
     ToolbarComponent,
     IonButton,
+    ToSomewhereComponent,
   ],
 })
 export class FavoritesPage implements OnInit {
@@ -74,16 +76,6 @@ export class FavoritesPage implements OnInit {
 
   ngOnInit() {
     this.getNextPage();
-  }
-
-  redirectToPokemonDetails(id?: number | string) {
-    this.router.navigate([`/pokemons/${id}`], {
-      queryParams: { back: 'favorites' },
-    });
-  }
-
-  redirectToHome() {
-    this.router.navigate([`/`]);
   }
 
   getNextPage() {

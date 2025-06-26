@@ -19,6 +19,7 @@ import { FavButtonComponent } from '../fav-button/fav-button.component';
 import { Router } from '@angular/router';
 import { Pokemon } from 'src/app/interfaces/pokemons.interface';
 import { SearchService } from 'src/app/services/search.service';
+import { ToSomewhereComponent } from '../redirects-buttons/to-somewhere/to-somewhere.component';
 
 @Component({
   selector: 'app-pokemon-display',
@@ -34,6 +35,7 @@ import { SearchService } from 'src/app/services/search.service';
     IonCardSubtitle,
     IonCardContent,
     FavButtonComponent,
+    ToSomewhereComponent,
   ],
 })
 export class PokemonDisplayComponent implements OnInit {
@@ -62,9 +64,5 @@ export class PokemonDisplayComponent implements OnInit {
         }
       },
     });
-  }
-
-  redirectToPokemonDetails(id?: number | string) {
-    this.router.navigate([`/pokemons/${id ?? this.currentPokemon()?.id}`]);
   }
 }

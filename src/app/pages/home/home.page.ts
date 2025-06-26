@@ -22,7 +22,6 @@ import {
   IonInfiniteScroll,
   IonInfiniteScrollContent,
   InfiniteScrollCustomEvent,
-  IonButton,
 } from '@ionic/angular/standalone';
 import { ToolbarComponent } from '../../components/toolbar/toolbar.component';
 import { Router } from '@angular/router';
@@ -32,6 +31,8 @@ import { eye, heart } from 'ionicons/icons';
 import { FavButtonComponent } from '../../components/fav-button/fav-button.component';
 import { PokemonsPaginateApi } from 'src/app/interfaces/pokeapi.interface';
 import { PokemonDisplayComponent } from '../../components/pokemon-display/pokemon-display.component';
+import { ToFavoritesPageComponent } from '../../components/redirects-buttons/to-favorites-page/to-favorites-page.component';
+import { ToSomewhereComponent } from '../../components/redirects-buttons/to-somewhere/to-somewhere.component';
 
 @Component({
   selector: 'app-home',
@@ -53,8 +54,9 @@ import { PokemonDisplayComponent } from '../../components/pokemon-display/pokemo
     IonInfiniteScroll,
     IonInfiniteScrollContent,
     FavButtonComponent,
-    IonButton,
     PokemonDisplayComponent,
+    ToFavoritesPageComponent,
+    ToSomewhereComponent,
   ],
 })
 export class HomePage implements OnInit {
@@ -69,10 +71,6 @@ export class HomePage implements OnInit {
 
   ngOnInit(): void {
     this.getNextPage();
-  }
-
-  redirectToPokemonDetails(id?: number | string) {
-    this.router.navigate([`/pokemons/${id}`]);
   }
 
   getNextPage(event?: InfiniteScrollCustomEvent) {
@@ -129,9 +127,5 @@ export class HomePage implements OnInit {
         });
       },
     });
-  }
-
-  redirectToFavorites() {
-    this.router.navigate([`/favorites`]);
   }
 }

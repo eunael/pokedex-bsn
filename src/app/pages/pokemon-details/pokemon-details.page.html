@@ -1,14 +1,11 @@
 <app-toolbar></app-toolbar>
 
 <ion-content [fullscreen]="true">
-  <ion-button
-    class="ion-margin"
-    shape="round"
-    (click)="redirectToBack()"
-    routerDirection="back"
-  >
-    <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-  </ion-button>
+  <app-to-somewhere [urlPath]="urlPathBack">
+    <ion-button class="ion-margin" shape="round">
+      <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+    </ion-button>
+  </app-to-somewhere>
 
   <ion-grid>
     <ion-row>
@@ -127,12 +124,14 @@
       <ion-card class="evo-card-item-container" style="width: 100%">
         <ion-fab class="ion-margin" horizontal="end">
           @if (evo.pokemon.id !== pokemon()!.id) {
-            <ion-fab-button
-              (click)="redirectToPokemonDetailsEvos(evo.pokemon.name)"
-              size="small"
+            <app-to-somewhere
+              [urlPath]="`pokemons/${evo.pokemon.name}`"
+              [queryParams]="{ back: 'pokemons/' + this.pokemon()!.id }"
             >
-              <ion-icon name="eye" size="small"></ion-icon>
-            </ion-fab-button>
+              <ion-fab-button size="small">
+                <ion-icon name="eye" size="small"></ion-icon>
+              </ion-fab-button>
+            </app-to-somewhere>
           }
           <app-fav-button [id]="evo.pokemon.id"></app-fav-button>
         </ion-fab>

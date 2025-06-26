@@ -2,10 +2,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-fab slot="fixed" horizontal="end" vertical="bottom">
-    <ion-button color="dark" href="/favorites">
-      <ion-icon slot="end" name="heart"></ion-icon>
-      Meus favoritos
-    </ion-button>
+    <app-to-favorites-page></app-to-favorites-page>
   </ion-fab>
 
   <div class="container">
@@ -20,12 +17,11 @@
           <ion-col size="12" size-sm="3">
             <ion-card>
               <ion-fab class="ion-margin" horizontal="end">
-                <ion-fab-button
-                  (click)="redirectToPokemonDetails(pokemon.name)"
-                  size="small"
-                >
-                  <ion-icon name="eye" size="small"></ion-icon>
-                </ion-fab-button>
+                <app-to-somewhere [urlPath]="`pokemons/${pokemon.name}`">
+                  <ion-fab-button size="small">
+                    <ion-icon name="eye" size="small"></ion-icon>
+                  </ion-fab-button>
+                </app-to-somewhere>
                 <app-fav-button [id]="pokemon.id"></app-fav-button>
               </ion-fab>
               <div class="card-list-image">

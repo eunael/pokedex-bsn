@@ -3,11 +3,10 @@
     <ion-title size="small">
       <ion-grid>
         <ion-row>
-          <ion-col
-            class="ion-text-center ion-text-sm-left"
-            (click)="redirectToHome()"
-          >
-            <img src="assets/logo.png" style="max-width: 60px" />
+          <ion-col class="ion-text-center ion-text-sm-left">
+            <app-to-somewhere [urlPath]="'/'">
+              <img src="assets/logo.png" style="max-width: 60px" />
+            </app-to-somewhere>
           </ion-col>
           <ion-col size="auto">
             <app-searchbar></app-searchbar>

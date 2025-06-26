@@ -34,6 +34,7 @@ import {
 import { addIcons } from 'ionicons';
 import { arrowBack, arrowForward, eye } from 'ionicons/icons';
 import { FavButtonComponent } from '../../components/fav-button/fav-button.component';
+import { ToSomewhereComponent } from '../../components/redirects-buttons/to-somewhere/to-somewhere.component';
 
 @Component({
   selector: 'app-pokemon-details',
@@ -60,12 +61,14 @@ import { FavButtonComponent } from '../../components/fav-button/fav-button.compo
     FavButtonComponent,
     IonFab,
     IonFabButton,
+    ToSomewhereComponent,
   ],
 })
 export class PokemonDetailsPage implements OnInit {
   protected readonly route = inject(ActivatedRoute);
   protected readonly router = inject(Router);
   protected readonly search = inject(SearchService);
+  urlPathBack: string = '/';
   pokemon: WritableSignal<Pokemon | null> = signal(null);
   evolutions: WritableSignal<PokemonEvolutionChain[]> = signal([]);
 
@@ -85,27 +88,11 @@ export class PokemonDetailsPage implements OnInit {
           .then(evo => this.evolutions.set(evo));
       },
     });
-  }
-
-  redirectToBack() {
-    let routeToBack = '/';
 
     this.route.queryParams.subscribe(route => {
       if (route['back']) {
-        routeToBack = route['back'];
+        this.urlPathBack = route['back'];
       }
-    });
-
-    this.router.navigate([routeToBack]);
-  }
-
-  redirectToPokemonDetails(id?: number | string) {
-    this.router.navigate([`/pokemons/${id}`]);
-  }
-
-  redirectToPokemonDetailsEvos(id?: number | string) {
-    this.router.navigate([`/pokemons/${id}`], {
-      queryParams: { back: `pokemons/${this.pokemon()!.id}` },
     });
   }
 }

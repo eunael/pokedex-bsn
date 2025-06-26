@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {
@@ -11,19 +11,34 @@ import {
 } from '@ionic/angular/standalone';
 import { SearchService } from 'src/app/services/search.service';
 import { Pokemon } from '../../interfaces/pokemons.interface';
+import { ToSomewhereComponent } from '../redirects-buttons/to-somewhere/to-somewhere.component';
 
 @Component({
   selector: 'app-searchbar',
   templateUrl: './searchbar.component.html',
   styleUrls: ['./searchbar.component.scss'],
-  imports: [IonSearchbar, IonList, IonItem, IonLabel, IonImg, IonAvatar],
+  imports: [
+    IonSearchbar,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonImg,
+    IonAvatar,
+    ToSomewhereComponent,
+  ],
 })
-export class SearchbarComponent {
+export class SearchbarComponent implements OnInit {
+  protected readonly route = inject(Router);
   protected readonly router = inject(Router);
   protected readonly searchService = inject(SearchService);
+  urlPathBack = '/';
   pokemonFound?: Pokemon | null;
 
   constructor() {}
+
+  ngOnInit(): void {
+    this.urlPathBack = this.route.url;
+  }
 
   getPokemon(event: Event) {
     const target = event.target as HTMLIonSearchbarElement;
@@ -46,15 +61,6 @@ export class SearchbarComponent {
   }
 
   setPokemonFoundNull() {
-    this.pokemonFound = null;
-  }
-
-  redirectToPokemonDetails() {
-    if (!this.pokemonFound) {
-      return;
-    }
-
-    this.router.navigate([`/pokemons/${this.pokemonFound.id}`]);
     this.pokemonFound = null;
   }
 }

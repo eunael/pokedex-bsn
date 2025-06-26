@@ -1,8 +1,10 @@
 <ion-card style="width: 100%" class="ion-padding">
   <ion-fab class="ion-margin" horizontal="end">
-    <ion-fab-button (click)="redirectToPokemonDetails()" size="small">
-      <ion-icon name="eye" size="small"></ion-icon>
-    </ion-fab-button>
+    <app-to-somewhere [urlPath]="`pokemons/${currentPokemon()?.id}`">
+      <ion-fab-button size="small">
+        <ion-icon name="eye" size="small"></ion-icon>
+      </ion-fab-button>
+    </app-to-somewhere>
     <app-fav-button [id]="currentPokemon()?.id"></app-fav-button>
   </ion-fab>
 

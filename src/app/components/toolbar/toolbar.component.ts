@@ -9,6 +9,7 @@ import {
 } from '@ionic/angular/standalone';
 import { SearchbarComponent } from '../searchbar/searchbar.component';
 import { Router } from '@angular/router';
+import { ToSomewhereComponent } from '../redirects-buttons/to-somewhere/to-somewhere.component';
 
 @Component({
   selector: 'app-toolbar',
@@ -22,14 +23,11 @@ import { Router } from '@angular/router';
     IonRow,
     IonCol,
     IonHeader,
+    ToSomewhereComponent,
   ],
 })
 export class ToolbarComponent {
   protected readonly router = inject(Router);
 
   constructor() {}
-
-  redirectToHome() {
-    this.router.navigate([`/`]);
-  }
 }
