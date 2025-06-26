@@ -5,7 +5,10 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { PokemonsPaginateApi, SearchService } from '../../services/search.service';
+import {
+  PokemonsPaginateApi,
+  SearchService,
+} from '../../services/search.service';
 import { Pokemon, SimplePokemon } from '../../types/Pokemon';
 import {
   IonCard,
