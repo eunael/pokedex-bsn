@@ -5,8 +5,8 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { PokemonsPaginateApi, SearchService } from '../services/search.service';
-import { Pokemon, SimplePokemon } from '../types/Pokemon';
+import { PokemonsPaginateApi, SearchService } from '../../services/search.service';
+import { Pokemon, SimplePokemon } from '../../types/Pokemon';
 import {
   IonCard,
   IonCardHeader,
@@ -25,12 +25,12 @@ import {
   InfiniteScrollCustomEvent,
   IonButton,
 } from '@ionic/angular/standalone';
-import { ToolbarComponent } from '../components/toolbar/toolbar.component';
+import { ToolbarComponent } from '../../components/toolbar/toolbar.component';
 import { Router } from '@angular/router';
 
 import { addIcons } from 'ionicons';
 import { eye, heart } from 'ionicons/icons';
-import { FavButtonComponent } from '../components/fav-button/fav-button.component';
+import { FavButtonComponent } from '../../components/fav-button/fav-button.component';
 
 @Component({
   selector: 'app-home',

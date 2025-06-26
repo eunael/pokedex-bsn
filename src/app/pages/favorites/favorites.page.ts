@@ -20,12 +20,12 @@ import {
   IonCardSubtitle,
   IonButton,
 } from '@ionic/angular/standalone';
-import { FavButtonComponent } from '../components/fav-button/fav-button.component';
-import { ToolbarComponent } from '../components/toolbar/toolbar.component';
+import { FavButtonComponent } from '../../components/fav-button/fav-button.component';
+import { ToolbarComponent } from '../../components/toolbar/toolbar.component';
 import { Router } from '@angular/router';
-import { SimplePokemon } from '../types/Pokemon';
-import { FavoriteService } from '../services/favorite.service';
-import { SearchService } from '../services/search.service';
+import { SimplePokemon } from '../../types/Pokemon';
+import { FavoriteService } from '../../services/favorite.service';
+import { SearchService } from '../../services/search.service';
 import { addIcons } from 'ionicons';
 import { arrowBack, eye } from 'ionicons/icons';
 
