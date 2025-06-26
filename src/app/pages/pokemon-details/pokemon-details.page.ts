@@ -26,7 +26,10 @@ import {
 import { ToolbarComponent } from '../../components/toolbar/toolbar.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchService } from '../../services/search.service';
-import { Pokemon, PokemonEvolutionChain } from '../../types/Pokemon';
+import {
+  Pokemon,
+  PokemonEvolutionChain,
+} from '../../interfaces/pokemons.interface';
 
 import { addIcons } from 'ionicons';
 import { arrowBack, arrowForward, eye } from 'ionicons/icons';

@@ -5,11 +5,8 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import {
-  PokemonsPaginateApi,
-  SearchService,
-} from '../../services/search.service';
-import { Pokemon, SimplePokemon } from '../../types/Pokemon';
+import { SearchService } from '../../services/search.service';
+import { Pokemon, SimplePokemon } from '../../interfaces/pokemons.interface';
 import {
   IonCard,
   IonCardHeader,
@@ -34,6 +31,7 @@ import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { eye, heart } from 'ionicons/icons';
 import { FavButtonComponent } from '../../components/fav-button/fav-button.component';
+import { PokemonsPaginateApi } from 'src/app/interfaces/pokeapi.interface';
 
 @Component({
   selector: 'app-home',

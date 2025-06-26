@@ -10,7 +10,7 @@ import {
   IonAvatar,
 } from '@ionic/angular/standalone';
 import { SearchService } from 'src/app/services/search.service';
-import { Pokemon } from 'src/app/types/Pokemon';
+import { Pokemon } from '../../interfaces/pokemons.interface';
 
 @Component({
   selector: 'app-searchbar',

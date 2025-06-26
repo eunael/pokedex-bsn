@@ -1,10 +1,10 @@
-export type SimplePokemon = {
+export interface SimplePokemon {
   id?: number;
   name: string;
   imageUrl?: string;
-};
+}
 
-export type Pokemon = {
+export interface Pokemon {
   id: number;
   name: string;
   height: number;
@@ -16,27 +16,27 @@ export type Pokemon = {
   abilities: PokemonAbility[];
   stats: PokemonStat[];
   chainEnvolution: PokemonEvolutionChain;
-};
+}
 
-export type PokemonType = {
+export interface PokemonType {
   slot: number;
   name: string;
   url: string;
-};
+}
 
-export type PokemonAbility = {
+export interface PokemonAbility {
   slot: number;
   name: string;
   url: string;
-};
+}
 
-export type PokemonStat = {
+export interface PokemonStat {
   name: string;
   value: number;
   url: string;
-};
+}
 
-export type PokemonEvolutionChain = {
+export interface PokemonEvolutionChain {
   pokemon: SimplePokemon;
   evolvesTo: PokemonEvolutionChain[];
-};
+}
