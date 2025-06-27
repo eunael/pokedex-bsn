@@ -61,7 +61,7 @@ ionic cap open android # precisa do Android Studio instalados
 - Utilize o padrão Observer para comunicação assíncrona com a PokeApi
 - Atribui IDs para nomear as branch de cada tarefa e utilizei o Husky para ativar hooks antes de fazer o commit para: identificar erros de código com o ESLint; formatar o código seguindo so padrões da comunidade com o Prettier; executar os testes; e adicionar o ID da task na mensagem do commit para facilitar a identificação.
 - Aplique paginação em todas as listagens (home: infinite scroll; favorites: paginate)
-- Utilizei interfaces para estrutura de objetos, contratos de classes (inversão de dependências) e dados da API
+- Utilizei interfaces para estrutura de objetos e dados da API
 - É possível executar o projeto em um container Docker
 
 ## Estrutura do projeto
